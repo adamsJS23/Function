@@ -51,4 +51,30 @@ function changedPassportNum(passenger) {
 }
 
 changedPassportNum(adam);
-checkIn(flight,adam)
+checkIn(flight, adam);
+
+function oneWord(str) {
+  return str.replaceAll(" ", "").toLowerCase();
+}
+
+const firstLetter2 = (str) => {
+  let output = "";
+  for (const word of str.split(" ")) {
+    // console.log(word)
+    // console.log(word[0].toUpperCase() + word.slice(1));
+    const newWord = word[0].toUpperCase() + word.slice(1);
+
+    output += newWord + " ";
+  }
+  return output;
+};
+
+const firstLetter = (str) => {
+  for (const [first, ...others] of str.split(" ")) {
+    console.log([first.toUpperCase(), ...others].join(""));
+  }
+};
+
+console.log(oneWord("je suis un bon developpeur"));
+firstLetter("je suis un bon developpeur");
+console.log(firstLetter2("jirai vivre a Londres"));

@@ -37,9 +37,9 @@ function checkIn(flightNum, passenger) {
   flightNum = "LH340";
   passenger.name = "Mr. " + passenger.name;
 
-  if (passenger.passport === 20282323) {
-    alert("Check In");
-  } else alert("Wrong passport");
+  // if (passenger.passport === 20282323) {
+  //   alert("Check In");
+  // } else alert("Wrong passport");
 }
 
 checkIn(flight, adam);
@@ -78,3 +78,32 @@ const firstLetter = (str) => {
 console.log(oneWord("je suis un bon developpeur"));
 firstLetter("je suis un bon developpeur");
 console.log(firstLetter2("jirai vivre a Londres"));
+
+const lufthansa = {
+  airline: "Lufthansa",
+  iataCode: "LH",
+  bookings: [],
+  book(name, flightNum) {
+    console.log(
+      `${name} booked a flight a seat on ${this.airline} ${this.iataCode}`
+    );
+    this.bookings.push({ name: name, flightNum });
+    console.log(this.bookings);
+  },
+};
+
+lufthansa.book("Guebre", "LH 320");
+lufthansa.book("Adam", "LH 327");
+
+const euroWings = {
+  airline: "Eurowings",
+  iataCode: "EW",
+  bookings: [],
+};
+
+const EWbook = lufthansa.book.bind(euroWings);
+
+EWbook("Sanou", "EW 340");
+const LHbook = lufthansa.book.bind(lufthansa);
+
+LHbook("Zida", "LH 275");

@@ -1,5 +1,5 @@
 "use strict";
-
+const pollEl = document.querySelector(".poll");
 // DEFAULT PARAMETERS
 const bookings = [];
 
@@ -107,3 +107,48 @@ EWbook("Sanou", "EW 340");
 const LHbook = lufthansa.book.bind(lufthansa);
 
 LHbook("Zida", "LH 275");
+
+const poll = {
+  question: "What's your favourite programming language ?",
+  options: ["0: Javascript", "1: Python", "2: Rust", "3: C++"],
+  answers: new Array(4).fill(0),
+  registeranswer() {
+    // Display Prompt
+    let pollAnwsers = "";
+    for (const option of this.options) {
+      pollAnwsers += option + "\n";
+    }
+
+    const answer = +prompt(
+      `${poll.question}
+  ${pollAnwsers.trim("")} \n (Write option number)`
+    );
+    // Check if answer is valid
+    if (answer < 0 || answer >= this.options.length) {
+      alert("Invalid answer");
+      return;
+    }
+
+    // Register answer
+    this.answers[answer] += 1;
+
+    // Display Results
+    this.displayResults(this.answers,'array');
+    this.displayResults(this.answers,'string');
+  },
+
+  displayResults(results, type = "array") {
+    if (type === "array") {
+      console.log(results);
+    } else if (type === "string") {
+      // const results=...this.answers;
+      console.log(`The poll results are`, results.join(","));
+    }
+  },
+};
+
+poll.registeranswer();
+pollEl.addEventListener("click", poll.registeranswer.bind(poll));
+
+poll.displayResults.call(poll, [2, 3, 5, 6],'string');
+poll.displayResults.call(poll, [2, 3, 5, 6.26,28,50]);

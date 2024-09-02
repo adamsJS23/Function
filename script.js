@@ -114,14 +114,8 @@ const poll = {
   answers: new Array(4).fill(0),
   registeranswer() {
     // Display Prompt
-    let pollAnwsers = "";
-    for (const option of this.options) {
-      pollAnwsers += option + "\n";
-    }
-
     const answer = +prompt(
-      `${poll.question}
-  ${pollAnwsers.trim("")} \n (Write option number)`
+      `${this.question}\n${this.options.join("\n")} \n (Write option number)`
     );
     // Check if answer is valid
     if (answer < 0 || answer >= this.options.length) {
@@ -130,19 +124,21 @@ const poll = {
     }
 
     // Register answer
-    this.answers[answer] += 1;
+    typeof answer === "number" &&
+      this.options.length > answer &&
+      this.answers[answer]++;
 
-    // Display Results
-    this.displayResults(this.answers,'array');
-    this.displayResults(this.answers,'string');
+    // Display this.answers
+    this.displayResults( "array");
+    this.displayResults("string");
   },
 
-  displayResults(results, type = "array") {
+  displayResults( type = "array") {
     if (type === "array") {
-      console.log(results);
+      console.log(this.answers);
     } else if (type === "string") {
-      // const results=...this.answers;
-      console.log(`The poll results are`, results.join(","));
+      // const this.answers=...this.answers;
+      console.log(`The poll this.answers are`, this.answers.join(", "));
     }
   },
 };
@@ -150,5 +146,5 @@ const poll = {
 poll.registeranswer();
 pollEl.addEventListener("click", poll.registeranswer.bind(poll));
 
-poll.displayResults.call(poll, [2, 3, 5, 6],'string');
-poll.displayResults.call(poll, [2, 3, 5, 6.26,28,50]);
+poll.displayResults.call({ answers: [2, 3, 5, 6] }, "string");
+poll.displayResults.call({ answers: [2, 3, 5, 6.26, 28, 50] });
